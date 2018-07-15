@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  widthHeight: number = 400;
+
+  setWidthAndHeight(){
+    let dimensions = {
+      'width': this.widthHeight + "px",
+      'height': this.widthHeight + "px"
+    }
+    return dimensions;
+  }
 }
