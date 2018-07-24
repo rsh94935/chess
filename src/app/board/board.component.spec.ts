@@ -16,6 +16,7 @@ describe('BoardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BoardComponent);
     component = fixture.componentInstance;
+    component.widthHeight = 400;
     fixture.detectChanges();
   });
 
