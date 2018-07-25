@@ -15,8 +15,10 @@ export class PawnComponent implements OnInit {
   ngOnInit() {
   }
 
-  getMoves(boardPieces, moves){
+  getMoves(boardPieces, moves, myLocation, colour){
     this.moveLocations = [];
+    this.myLocation = myLocation;
+    this.colour = colour;
     let block = this.movements(boardPieces, moves);
     let arrayCounter = 0;
 
@@ -31,6 +33,8 @@ export class PawnComponent implements OnInit {
     if( block[2] === 1 || block[2] === 2 ){
       this.moveLocations[arrayCounter] = [String.fromCharCode(this.myLocation[0].charCodeAt(0)+1), this.colourMove(1)];
     }
+
+    return this.moveLocations;
   }
 
   movements(boardPieces, moves){
@@ -47,8 +51,10 @@ export class PawnComponent implements OnInit {
     }
 
     let lastMove = moves[moves.length-1];
-
-    retVal = this.enPassant(lastMove, retVal);
+    
+    if( lastMove !== undefined ){
+      retVal = this.enPassant(lastMove, retVal);
+    }
 
     return retVal;
   }

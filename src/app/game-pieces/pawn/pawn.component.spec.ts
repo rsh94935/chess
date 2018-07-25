@@ -26,65 +26,47 @@ describe('PawnComponent', () => {
   });
 
   it('should be able to move at most 2 spaces', () => {
-    component.myLocation = ["A", 2];
-    component.colour = "White";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["A", 2], "White");
     expect(component.moveLocations).toEqual([["A", 4], ["A", 3]]);
   })
 
   it('should only be able to move at most 1 space', () => {
-    component.myLocation = ["A", 3];
-    component.colour = "White";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["A", 3], "White");
     expect(component.moveLocations).toEqual([["A", 4]]);
   })
 
   it('should not be able to move as it is blocked', () => {
-    component.myLocation = ["A", 4];
-    component.colour = "White";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["A", 4], "White");
     expect(component.moveLocations).toEqual([]);
   })
 
   it('should be able to take an opponents piece or move forward one space', () => {
-    component.myLocation = ["B", 4];
-    component.colour = "White";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["B", 4], "White");
     expect(component.moveLocations).toEqual([["B", 5], ["A", 5]]);
   })
 
   it('should be able to do en passant if the opponent moves forward next to your pawn', () => {
-    component.myLocation = ["E", 6];
-    component.colour = "White";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["E", 6], "White");
     expect(component.moveLocations).toEqual([["D", 7]]);
   })
 
   it('black should be able to move 2 spaces forward', () => {
-    component.myLocation = ["H", 7];
-    component.colour = "Black";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["H", 7], "Black");
     expect(component.moveLocations).toEqual([["H", 5], ["H", 6]]);
   })
 
   it('black should be able to move 1 space forward', () => {
-    component.myLocation = ["H", 6];
-    component.colour = "Black";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["H", 6], "Black");
     expect(component.moveLocations).toEqual([["H", 5]]);
   })
 
   it('should not be able to move as it is blocked', () => {
-    component.myLocation = ["B", 4];
-    component.colour = "Black";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["B", 4], "Black");
     expect(component.moveLocations).toEqual([]);
   })
 
   it('should be able to take an opponents piece or move forward one space', () => {
-    component.myLocation = ["C", 4];
-    component.colour = "Black";
-    component.getMoves(pieces, moves);
+    component.getMoves(pieces, moves, ["C", 4], "Black");
     expect(component.moveLocations).toEqual([["C", 3], ["B", 3]]);
   })
 });

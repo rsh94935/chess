@@ -1,7 +1,11 @@
 <div class="board" [ngStyle]="setWidthAndHeight(1)">
   <div *ngFor="let col of cols; let colIndex = index">
     <div *ngFor="let row of rows; let rowIndex = index" [ngClass]="(colIndex + rowIndex) % 2? 'light' : 'dark'"[ngStyle]="setWidthAndHeight(8)">
-      
+      <div *ngFor="let piece of pieces" [ngStyle]="setHeight(piece, col, row)">
+        <div *ngIf='test(piece, col, row)' class="center" (click)="selectPiece(piece)">
+          A
+        </div>
+      </div>
     </div>
   </div>
 </div>
