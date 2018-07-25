@@ -5,7 +5,8 @@ import { PawnComponent } from './pawn.component';
 describe('PawnComponent', () => {
   let component: PawnComponent;
   let fixture: ComponentFixture<PawnComponent>;
-  let pieces: any[] = [{"colour": "White", "location": ["B", 3]}, {"colour": "Black", location: ["A", 5]}]
+  let pieces: any[] = [{"colour": "White", "piece": "Pawn", "location": ["B", 3]}, {"colour": "Black", "piece": "Pawn", "location": ["A", 5]}, {"colour": "Black", "piece": "Pawn", "location": ["E", 7]}]
+  let moves: any[] = [{"piece": "Pawn", "colour":"Black", "moveFrom": ["D", 7], "moveTo": ["D", 6]}]
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,7 +18,6 @@ describe('PawnComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PawnComponent);
     component = fixture.componentInstance;
-    component.colour = "White";
     // fixture.detectChanges();
   });
 
@@ -27,20 +27,64 @@ describe('PawnComponent', () => {
 
   it('should be able to move at most 2 spaces', () => {
     component.myLocation = ["A", 2];
-    component.getMoves(pieces);
-    expect(component.moveLocations).toEqual([["A", 3], ["A", 4]]);
+    component.colour = "White";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([["A", 4], ["A", 3]]);
   })
 
   it('should only be able to move at most 1 space', () => {
     component.myLocation = ["A", 3];
-    component.getMoves(pieces);
+    component.colour = "White";
+    component.getMoves(pieces, moves);
     expect(component.moveLocations).toEqual([["A", 4]]);
   })
 
   it('should not be able to move as it is blocked', () => {
     component.myLocation = ["A", 4];
-    component.getMoves(pieces);
+    component.colour = "White";
+    component.getMoves(pieces, moves);
     expect(component.moveLocations).toEqual([]);
   })
 
+  it('should be able to take an opponents piece or move forward one space', () => {
+    component.myLocation = ["B", 4];
+    component.colour = "White";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([["B", 5], ["A", 5]]);
+  })
+
+  it('should be able to do en passant if the opponent moves forward next to your pawn', () => {
+    component.myLocation = ["E", 6];
+    component.colour = "White";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([["D", 7]]);
+  })
+
+  it('black should be able to move 2 spaces forward', () => {
+    component.myLocation = ["H", 7];
+    component.colour = "Black";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([["H", 5], ["H", 6]]);
+  })
+
+  it('black should be able to move 1 space forward', () => {
+    component.myLocation = ["H", 6];
+    component.colour = "Black";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([["H", 5]]);
+  })
+
+  it('should not be able to move as it is blocked', () => {
+    component.myLocation = ["B", 4];
+    component.colour = "Black";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([]);
+  })
+
+  it('should be able to take an opponents piece or move forward one space', () => {
+    component.myLocation = ["C", 4];
+    component.colour = "Black";
+    component.getMoves(pieces, moves);
+    expect(component.moveLocations).toEqual([["C", 3], ["B", 3]]);
+  })
 });
