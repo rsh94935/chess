@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
-import { PawnComponent } from './pawn/pawn.component';
+import { PawnComponent } from './game-pieces/pawn/pawn.component';
 
 
 @NgModule({
